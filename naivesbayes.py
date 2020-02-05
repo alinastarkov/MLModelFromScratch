@@ -29,7 +29,7 @@ class naivesBayes:
 
 	#take a set of input points as input and output predictions.
 	#convert probabilities to binary 0-1 prediction by thresholding the ouput at 0.5
-	def predict(instances, self):
+	def predictBernoulli(instances, self):
 		prediction = []
 		for instance in instances:
 			# calculate the posterier probability y = max log(P(x1|y)) + log(P(x2|y)) + .. + log(P(xn|y))
