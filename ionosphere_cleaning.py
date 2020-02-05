@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
 """
-
-@author: Dylan Caverly
-
 Note: 'ionosphere.data' must be renamed to 'ionosphere.csv' before 
-      running this script.
-      
+      running this script.   
 """
 
 import numpy as np
