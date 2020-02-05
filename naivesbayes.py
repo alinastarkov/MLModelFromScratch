@@ -8,7 +8,7 @@ class naivesBayes:
 	# function fit takes the training Data, hyperparameters as input
 	# x = NxD array where N is the number of instances and D is the number of features
 	# y = number of classes 
-	def fit(X, y, learningRate, iteration, self):
+	def fit(X, y, self):
 		num_instance = X.shape[0]
 		num_features = X.shape[1]
 		self.uniqueClasses = np.unique(y)
@@ -22,15 +22,14 @@ class naivesBayes:
 		for uniqueClass in self.uniqueClasses:
 			#select all the rows with the label, assuming that the label is always at the end 
 			selectedRows = X[np.where(X[:,-1] == uniqueClass)]
+			self.priorArray[uniqueClass] = selectedRows.shape[0] / num_instance
 			self.meanArray[uniqueClass, :] = selectedRows.mean(axis=0) #calculate the mean across the column of the selected rows 
 			self.varArray[uniqueClass, :] = selectedRows.var(axis=0)
-			self.priorArray[uniqueClass] = selectedRows.shape[0] / num_instance
 
 
 	#take a set of input points as input and output predictions.
 	#convert probabilities to binary 0-1 prediction by thresholding the ouput at 0.5
 	def predict(instances, self):
-		probability = []
 		prediction = []
 		for instance in instances:
 			# calculate the posterier probability y = max log(P(x1|y)) + log(P(x2|y)) + .. + log(P(xn|y))
@@ -43,15 +42,11 @@ class naivesBayes:
 				posterier = likelihood_term + self.priorArray[i]
 				posterier_prob.append(posterier)
 			output_probability = np.argmax(posterier_prob)
-			output
+			if output_probability > 0.5:
+				output_prediction = 1
+			elif output_prediction < 0.5:
+				output_prediction = 0
+			prediction.append(output_prediction)
+		return np.array(prediction)
 
 
-
-
-
-
-
-
-#evaluate the model accuracy
-#function takes the true label and target label as input, and output the accuracy score 
-def evaluate_acc(trueLabel, targetLabel):
