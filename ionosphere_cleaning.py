@@ -54,7 +54,6 @@ for i in range(len(io_Xg.T)):
     i = i-counter
     if (np.sum(io_Xg.T[i] == stats.mode(io_Xg.T[i]))> 0.6*(len(io_Xg)) ):
         io_Xg = np.delete(io_Xg,i,axis=1)
-        io_Yg = np.delete(io_Yg,i)
         counter +=1
         
 counter2 = 0
@@ -62,7 +61,6 @@ for j in range(len(io_Xb.T)):
     j = j-counter2
     if (np.sum(io_Xb.T[j] == stats.mode(io_Xb.T[j]))> 0.6*(len(io_Xb)) ):
         io_Xb = np.delete(io_Xb,j,axis=1)
-        io_Yb = np.delete(io_Yb,j)
         counter2 +=1
 
 
