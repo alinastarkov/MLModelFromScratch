@@ -6,7 +6,7 @@ Created on Wed Jan 29 15:01:07 2020
 """
 import numpy as np
 
-class NaiveBayes:
+class LogRegression:
 
     def logistic(z):
         yh = 1/(1+np.exp(-z))
