@@ -13,10 +13,10 @@ def evaluate_acc(trueLabels, predictLabels):
 	return correctPredictions.sum() / correct.size()
 
 #do the cross validation
-def k_cross_validation(X, y, model):
+def k_cross_validation(trainningData, y, model):
 	#need to split trainning data into X and y somehow
 	accuracies = []
-	k_folds = split_data(X)
+	k_folds = split_data(trainningData)
 	for i in range(5):
 		if(model=="nb"):
 			#nbModel=nb() fill this with attributes
@@ -36,7 +36,7 @@ def k_cross_validation(X, y, model):
 	return avg_accuracy
 
 
-def split_data(X):
+def split_data(trainningData):
 	split_data = []
 	copy_data = X
 	size_folds = int(len(X)/5)

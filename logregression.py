@@ -17,7 +17,7 @@ class LogRegression:
         gradJ = np.dot(X.T, yh - y)
         return gradJ
 
-    def fit(X, # N x D        # This is gradient descent 
+    def fit(X, # N x D  # This is gradient descent 
             y, # N
             learningRate, # learning rate
             eps, # termination codition

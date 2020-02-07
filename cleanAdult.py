@@ -39,13 +39,30 @@ le = preprocessing.LabelEncoder()
 
 # use df.apply() to apply le.fit_transform to all columns
 cat2_dfAdult = cat_dfAdult.apply(le.fit_transform)
-
+#print(cat2_dfAdult.head(5))
 
 enc = preprocessing.OneHotEncoder()
 enc.fit(cat2_dfAdult)
 onehotlabels = enc.transform(cat2_dfAdult).toarray()
+nocat_dfAdult = new_dfAdult.select_dtypes(exclude=[object])
+nocatlabels = nocat_dfAdult.to_numpy()
+
+
+
+alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
+
+#dropping the last column so <50k is 1 and >50k is 0
+
+#all adult data holds the array of data (X and y)
+alladultdata = alladultdata[:,:-1]
 #print(onehotlabels.shape)
 #print(cat2_dfAdult.head())
-print(onehotlabels)
+#print(onehotlabels)
+#print(nocatlabels)
+#print(nocatlabels.shape)
+
+print(alladultdata[:,[42]])
+#print(alldata.shape)
+
 
 
