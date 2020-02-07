@@ -17,17 +17,17 @@ class LogRegression:
         gradJ = np.dot(X.T, yh - y)
         return gradJ
 
-    def fit(X, # N x D  # This is gradient descent 
+    def fit (X, # N x D  # This is gradient descent 
             y, # N
             learningRate, # learning rate
-            eps, # termination codition
+            eps # termination codition 
             ):
         N,D = X.shape
         w = np.zeros(D)
         g = np.inf
         while np.linalg.norm(g) > eps:
             g = gradient(X, y, w)
-            w = w - learningRate*g
+            w = w - learningRate*(g)
             return w
 
     def predict(X,w):
@@ -35,6 +35,23 @@ class LogRegression:
         yh = np.rint(yh) 
         # This (above) converts each value in yh to the nearest integer (0 or 1)
         return yh
+
+"""
+ def fit(X, # N x D  # This is gradient descent 
+            y, # N
+            learningRate, # learning rate
+            eps,# termination codition
+            self 
+            ):
+        N,D = X.shape
+        self.w = np.zeros(D)
+        self.g = np.inf
+        while np.linalg.norm(self.g) > eps:
+            self.g = gradient(X, y, w)
+            self.w = self.w - learningRate*(self.g)
+            return self. w
+    """
+    
 
 
 
