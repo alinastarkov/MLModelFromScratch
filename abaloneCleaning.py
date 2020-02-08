@@ -10,6 +10,7 @@ abHeaders = ['sex', 'length', 'diameter', 'height', 'wholeWeight', 'shuckedWeigh
 dfAb = pd.read_csv('abalone.data', sep=",", header=None, names=abHeaders, na_values=[" ?"])
 
 #select categorical features to one hot encode
+#this is only the gender feature
 cat_dfAb = dfAb.select_dtypes(include=[object])
 #print(cat_dfAb.head(30))
 
@@ -20,37 +21,71 @@ cat2_dfAb = cat_dfAb.apply(le.fit_transform)
 enc = preprocessing.OneHotEncoder()
 enc.fit(cat2_dfAb)
 onehotlabels = enc.transform(cat2_dfAb).toarray()
-print(onehotlabels)
+#print(onehotlabels)
 nocat_dfAb =  dfAb.select_dtypes(exclude=[object])
+
+#now lets remove the related terms: length
+nocat_dfAb=nocat_dfAb.drop(columns=['diameter', 'shuckedWeight'])
 nocatlabels = nocat_dfAb.to_numpy()
 
-
-
 allabdata= np.concatenate((onehotlabels, nocatlabels), axis=1)
-#allabdata = allhabdata[:,:-1]
-
-#dropping the last column so if survived more than 5 years->1 and survived less than 5 years is 0
+#print(allabdata.shape)
 #print(allabdata)
 
  
 #GRAPHS
-#bar graph age
-#out = pd.cut(dfHab['age'], bins=[0, 20, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90], include_lowest=True)
-#ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+#bar graph by sex
+dfAb["sex"].value_counts().plot(kind='bar')
 #plt.show()
 
-
-#bar graph opyear
-#dfHab['opYear'].value_counts().sort_index(ascending=False).plot(kind='bar')
+#bar graph length
+out = pd.cut(dfAb['length'], bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
 #plt.show()
 
-#bar graph nodes
-#dfHab['nodes'].value_counts().plot(kind='bar')
+#bar graph diameter
+out = pd.cut(dfAb['diameter'], bins=[0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
 #plt.show()
 
-#bar graph class
-#dfHab['survival'].value_counts().plot(kind='bar')
+#bar graph height
+out = pd.cut(dfAb['height'], bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+plt.title("Height")
 #plt.show()
+
+#bar graph wholeWeight
+out = pd.cut(dfAb['wholeWeight'], bins=[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+plt.title("Whole Weight")
+#plt.show()
+
+#bar graph shuckedWeight
+out = pd.cut(dfAb['shuckedWeight'], bins=[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+plt.title("Shucked Weight")
+#plt.show()
+
+#bar graph visceraWeight
+out = pd.cut(dfAb['visceraWeight'], bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+plt.title("Visera Weight")
+#plt.show()
+
+#bar graph shellWeight
+out = pd.cut(dfAb['shellWeight'], bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], include_lowest=True)
+ax = out.value_counts(sort=False).plot.bar(rot=0, figsize=(6,4))
+plt.title("Shell Weight")
+#plt.show()
+
+#bar graph rings
+dfAb["rings"].value_counts().sort_index(ascending=True).plot(kind='bar')
+plt.title("Rings")
+#plt.show()
+
+#pairwise scatter
+#sns.pairplot(dfAb)
+#plt.savefig('ab.png')
 
 
 #scatter class vs age
@@ -81,44 +116,9 @@ plt.show()
 sns.pairplot(dfHab)
 plt.savefig('a.png')
 """
-#scatter age vs opyear
-
-
-#notes
-"""
-dfHab.plot(kind='bar',x='opYear',y='survival',color='blue')
-plt.show()
-
-dfHab.plot(kind='bar',x='nodes',y='survival',color='green')
-plt.show()
-
-dfHab.plot(kind='bar',x='opYear',y='nodes',color='green')
-plt.show()
-
-dfHab['age'].value_counts().plot(kind='bar')
-plt.show()
-dfHab=dfHab.sort_values(by='opYear')
-
-df = dfHab.groupby("survival")
-df['age'].value_counts().plot(kind='scatter')
-plt.show()
-"""
 
 
 
-#out = pd.cut(dfHab.groupby('survival')['age'], bins=[0, 20, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90], include_lowest=True)
-#dfHab.groupby('survival')['age'].value_counts().sort_index().plot.bar(by='survival')
-#ax = out.value_counts().plot(kind='bar')
-#plt.show()
-
-#dfHab['age'].value_counts().sort_index().plot.bar(by='survival', subplots=True)
-
-#ax = out.value_counts().plot(kind='bar')
-#plt.show()
-
-#avg_age_per_year = dfHab.groupby('opYear')['age'].mean() 
-#dfHab.plot(kind='scatter',x='opYear',y='avg_age_per_year',color='green')
-#plt.show()
 
 
 
