@@ -36,22 +36,6 @@ class LogRegression:
         yh = np.rint(yh) 
         # This (above) converts each value in yh to the nearest integer (0 or 1)
         return yh
-
-"""
- def fit(X, # N x D  # This is gradient descent 
-            y, # N
-            learningRate, # learning rate
-            eps,# termination codition
-            self 
-            ):
-        N,D = X.shape
-        self.w = np.zeros(D)
-        self.g = np.inf
-        while np.linalg.norm(self.g) > eps:
-            self.g = gradient(X, y, w)
-            self.w = self.w - learningRate*(self.g)
-            return self. w
-    """
     
 
 
