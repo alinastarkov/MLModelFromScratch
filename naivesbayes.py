@@ -33,7 +33,7 @@ class NaiveBayes:
         col_prediction = []
         #loop through the class 
         for i in self.summaries:
-            # for each class and each attribute, calculate the prob based on the gaussian density
+            # for each class, calculate the prob with the gaussian function, sum the prob of the attribute
             col_prediction.append(np.sum(self._gaussian_prob(val, rowsummary[0], rowsummary[1]) for rowsummary, val in zip(i, x)))
         return col_prediction
 
