@@ -1,52 +1,46 @@
-import numpy has np 
+import numpy as np 
 
-class naivesBayes:
-	def __init__(self):
-		
+class NaiveBayes:
+    def __init__(self):
+        pass
 
+    def _gaussian_prob(self, x, mean, std):
+        top = np.exp(- ((x-mean)**2 / (2 * std**2)))
+        bottom = np.sqrt(2*np.pi* std**2)
+        return np.log(top/bottom)
 
-	# function fit takes the training Data, hyperparameters as input
-	# x = NxD array where N is the number of instances and D is the number of features
-	# y = number of classes 
-	def fit(X, y, self):
-		num_instance = X.shape[0]
-		num_features = X.shape[1]
-		self.uniqueClasses = np.unique(y)
-		num_classes = len(self.uniqueClasses)
+    def fit(self, X, y):
+        self.uniqueClasses = np.unique(y)
+        seperated = []
 
-		#initialize the array of the mean, standard deviation, and prior probability fill with 0
-		self.priorArray = np.zeros(num_classes)
-		self.meanArray, self.varArray = np.zeros(num_instance, num_features)
+        #seperated the data by class
+        for c in self.uniqueClasses: 
+            #select all the rows with the label, assuming that the label is always at the end 
+            selectedRows = X[y == c]
+            seperated.append(selectedRows)
+        
+        #calculate mean, standard deviation
+        summaries= np.array([(np.mean(i, axis=0), np.std(i, axis=0)) for i in seperated])
+        self.summaries = []
+        for subArray in summaries: 
+            # the original array is like [[[mean1class1, mean2class1],[std1class1, std2]][]] we want to put it into [[[mean1class1, std1class1], [mean2, std2]]]
+            summary = list(zip(*subArray))
+            self.summaries.append((summary))
 
-		# fill the mean Array, prior Array, and standard deviation array
-		for uniqueClass in self.uniqueClasses:
-			#select all the rows with the label, assuming that the label is always at the end 
-			selectedRows = X[np.where(X[:,-1] == uniqueClass)]
-			self.priorArray[uniqueClass] = selectedRows.shape[0] / num_instance
-			self.meanArray[uniqueClass, :] = selectedRows.mean(axis=0) #calculate the mean across the column of the selected rows 
-			self.varArray[uniqueClass, :] = selectedRows.var(axis=0)
+        self.summaries = np.array(self.summaries)
 
-
-	#take a set of input points as input and output predictions.
-	#convert probabilities to binary 0-1 prediction by thresholding the ouput at 0.5
-	def predictBernoulli(instances, self):
-		prediction = []
-		for instance in instances:
-			# calculate the posterier probability y = max log(P(x1|y)) + log(P(x2|y)) + .. + log(P(xn|y))
-			posterier_prob = []
-			for i in range(num_classes):
-				uniqueClass=self.uniqueClass[i]
-				var = self.varArray[i]
-				mean = self.stdArray[i]
-				likelihood_term = np.sum(np.log((np.exp(-(uniqueClass-mean)**2/2*stdv))/( np.sqrt(stdv*2*np.pi))))
-				posterier = likelihood_term + self.priorArray[i]
-				posterier_prob.append(posterier)
-			output_probability = np.argmax(posterier_prob)
-			if output_probability > 0.5:
-				output_prediction = 1
-			elif output_prediction < 0.5:
-				output_prediction = 0
-			prediction.append(output_prediction)
-		return np.array(prediction)
+    def _get_prob(self, x):
+        col_prediction = []
+        #loop through the class 
+        for i in self.summaries:
+            col_prediction.append(np.sum(self._gaussian_prob(val, rowsummary[0], rowsummary[1]) for rowsummary, val in zip(i, x)))
+        return col_prediction
 
 
+    def predict(self,X):
+        prediction = []
+        for x in X:
+            #get individual probability for each attribute for each class in each row, 
+            prob_prediction = self._get_prob(x)
+            prediction.append(prob_prediction)
+        return np.argmax(prediction, axis=1)
