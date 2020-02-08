@@ -1,7 +1,8 @@
 import numpy as np
-import naivesbayes as nb
+from naivesbayes import NaiveBayes
 from sklearn.utils import shuffle
-import logregression as log 
+from logregression import LogRegression 
+import random
 
 
 #evaluate the model accuracy
@@ -10,7 +11,7 @@ import logregression as log
 def evaluate_acc(trueLabels, predictLabels):
 	#accuracy = number of correct predictions/ total number of predictions made
 	correctPredictions = (trueLabels == predictLabels)
-	return correctPredictions.sum() / correct.size()
+	return correctPredictions.sum() / correctPredictions.size()
 
 #do the cross validation
 def k_cross_validation(trainningData, y, model):
@@ -19,33 +20,32 @@ def k_cross_validation(trainningData, y, model):
 	k_folds = split_data(trainningData)
 	for i in range(5):
 		if(model=="nb"):
-			#nbModel=nb() fill this with attributes
+			nbModel=NaiveBayes() 
 			nbModel.fit(k_folds[i], y)
 			testSet = k_folds[:i]+k_folds[i+1:]
 			predictions = nbModel.predict(testSet)
 			accuracies.append(evaluate_acc(y, predictions))
 
 		else:
-			#logModel=nb() fill this with attributes
-			logModel.fit(k_folds[i])
+			logModel=LogRegression() 
+			w = logModel.fit(k_folds[i], y, 0.001, 0.001)
 			testSet = k_folds[:i]+k_folds[i+1:]
-			predictions = nb.predict(testSet)
+			predictions = logModel.predict(testSet, w)
 			accuracies.append(evaluate_acc(y, predictions))
 			
 	avg_accuracy = sum(accuracies)/5
 	return avg_accuracy
 
 
-def split_data(trainningData):
+def split_data(X):
 	split_data = []
 	copy_data = X
 	size_folds = int(len(X)/5)
 
-	for j in range(5):
+	for _ in range(5):
 		fold = []
 		while len(fold) < size_folds:
-			i = randrange(len(copy_data))
+			i = random.randrange(len(copy_data))
 			fold.append(copy_data[i])
 		split_data.append(fold)
 	return np.array(split_data)
-	
