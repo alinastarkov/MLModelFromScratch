@@ -7,17 +7,18 @@ Created on Wed Jan 29 15:01:07 2020
 import numpy as np
 
 class LogRegression:
-
-    def logistic(z):
+    def __init__(self):
+        pass
+    def _logistic(self, z):
         yh = 1/(1+np.exp(-z))
         return yh
 
-    def gradient(X, y, w):
-        yh = logistic(np.dot(X, w))
+    def _gradient(self, X, y, w):
+        yh = self._logistic(np.dot(X, w))
         gradJ = np.dot(X.T, yh - y)
         return gradJ
 
-    def fit (X, # N x D  # This is gradient descent 
+    def fit (self, X,
             y, # N
             learningRate, # learning rate
             eps # termination codition 
@@ -26,12 +27,12 @@ class LogRegression:
         w = np.zeros(D)
         g = np.inf
         while np.linalg.norm(g) > eps:
-            g = gradient(X, y, w)
+            g = self._gradient(X, y, w)
             w = w - learningRate*(g)
             return w
 
-    def predict(X,w):
-        yh = logistic(np.dot(X, w))
+    def predict(self,X,w):
+        yh = self._logistic(np.dot(X, w))
         yh = np.rint(yh) 
         # This (above) converts each value in yh to the nearest integer (0 or 1)
         return yh
