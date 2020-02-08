@@ -14,7 +14,7 @@ def evaluate_acc(trueLabels, predictLabels):
 	return correctPredictions.sum() / correctPredictions.size()
 
 #do the cross validation
-def k_cross_validation(trainningData, y, model):
+def k_cross_validation(trainningData, model):
 	#need to split trainning data into X and y somehow
 	accuracies = []
 	k_folds = split_data(trainningData)
@@ -24,7 +24,8 @@ def k_cross_validation(trainningData, y, model):
 			nbModel.fit(k_folds[i], y)
 			testSet = k_folds[:i]+k_folds[i+1:]
 			predictions = nbModel.predict(testSet)
-			accuracies.append(evaluate_acc(y, predictions))
+			test_y = predictions[-1]
+			accuracies.append(evaluate_acc(test_y, predictions))
 
 		else:
 			logModel=LogRegression() 
