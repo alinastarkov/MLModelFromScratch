@@ -35,6 +35,21 @@ def k_cross_validation(trainningData, label, model):
 			nbModel.fit(Xtrain, Ytrain)
 			predictions = nbModel.predict(testSet)
 			accuracies.append(evaluate_acc(test_y, predictions))
+		else:
+			Xtrain = k_folds[0].copy()
+			Ytrain = k_folds[1].copy()
+			testSet = k_folds[0][i]
+			test_y = k_folds[1][i]
+			np.delete(Xtrain, i, 0)
+			np.delete(Ytrain, i, 0)
+			Xtrain = np.concatenate(Xtrain)
+			Ytrain = np.concatenate(Ytrain)
+
+			logModel=LogRegression(0.001, 10000) 
+			w = logModel.fit(Xtrain, Ytrain)
+			predictions = logModel.predict(testSet, w)
+			accuracies.append(evaluate_acc(test_y, predictions))
+
 
 	avg_accuracy = sum(accuracies)/5
 	return avg_accuracy
@@ -54,4 +69,6 @@ def split_data(X, y):
 bc = datasets.load_iris()
 X, y = bc.data, bc.target
 test = k_cross_validation(X, y, "nb")
+testlog = k_cross_validation(X, y, "log")
 print(test)
+print(testlog)
