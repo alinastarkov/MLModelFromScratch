@@ -7,8 +7,10 @@ Created on Wed Jan 29 15:01:07 2020
 import numpy as np
 
 class LogRegression:
-    def __init__(self):
-        pass
+    def __init__(self, learningRate, iteration):
+        self.lr = learningRate
+        self.itr = iteration
+
     def _logistic(self, z):
         yh = 1/(1+np.exp(-z))
         return yh
@@ -18,17 +20,13 @@ class LogRegression:
         gradJ = np.dot(X.T, yh - y)
         return gradJ
 
-    def fit (self, X,
-            y, # N
-            learningRate, # learning rate
-            eps # termination codition 
-            ):
+    def fit (self, X, y):
         N,D = X.shape
         w = np.zeros(D)
         g = np.inf
-        while np.linalg.norm(g) > eps:
+        while np.linalg.norm(g) > self.itr:
             g = self._gradient(X, y, w)
-            w = w - learningRate*(g)
+            w = w - self.lr*(g)
             return w
 
     def predict(self,X,w):
