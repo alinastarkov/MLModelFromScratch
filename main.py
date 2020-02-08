@@ -43,7 +43,7 @@ def k_cross_validation(trainningData, label, model):
 def split_data(X, y):
 	return np.array_split(X, 5), np.array_split(y, 5)
 
-X, y = datasets.make_classification(n_samples=1000, n_features=10, n_classes=2, random_state=123)
+
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
 # nbModel=NaiveBayes() 
 # nbModel.fit(X_train, y_train)
@@ -51,5 +51,7 @@ X, y = datasets.make_classification(n_samples=1000, n_features=10, n_classes=2, 
 # a = evaluate_acc(y_test, predictions)
 # print(a)
 
+bc = datasets.load_iris()
+X, y = bc.data, bc.target
 test = k_cross_validation(X, y, "nb")
 print(test)
