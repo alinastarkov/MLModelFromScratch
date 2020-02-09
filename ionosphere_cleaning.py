@@ -27,6 +27,9 @@ for i in range(len(io_Y)):
 # convert the data to an array of floats
 io_all = np.array(io_all, dtype=float) 
 
+X_ionosphere = io_all[:, :-1]
+y_ionosphere= io_all[:, -1]
+
 # Here, we divide the data into the "good" and "bad" subsets. We accomplish
 # this by sorting the data by the ouput column, then splitting the array
 # into the section with a good output (1) and a bad ouput (0)

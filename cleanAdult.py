@@ -52,7 +52,6 @@ nocatlabels = nocat_dfAdult.to_numpy()
 alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
 
 #dropping the last column so <50k is 1 and >50k is 0
-
 #all adult data holds the array of data (X and y)
 alladultdata = alladultdata[:,:-1]
 #print(onehotlabels.shape)
@@ -60,8 +59,11 @@ alladultdata = alladultdata[:,:-1]
 #print(onehotlabels)
 #print(nocatlabels)
 #print(nocatlabels.shape)
+#print(alladultdata[:,[42]])
+X_adult = alladultdata[:, :-1]
+y_adult= alladultdata[:, -1]
 
-print(alladultdata[:,[42]])
+
 #print(alldata.shape)
 
 

@@ -29,8 +29,13 @@ nocat_dfAb=nocat_dfAb.drop(columns=['diameter', 'shuckedWeight'])
 nocatlabels = nocat_dfAb.to_numpy()
 
 allabdata= np.concatenate((onehotlabels, nocatlabels), axis=1)
+
+X_abalone = allabdata[:, :-1]
+y_abalone= allabdata[:, -1]
 #print(allabdata.shape)
 #print(allabdata)
+#print(X_ab)
+#print(y_ab)
 
  
 #GRAPHS
