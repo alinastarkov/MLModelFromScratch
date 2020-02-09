@@ -3,14 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn import preprocessing
+import category_encoders as ce
+
 
 adultHeaders=['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'native-country', 'income'] 
 
-#dfIonosphere = pd.read_csv('ionosphere.txt', sep=',', header=None)
 dfAdult = pd.read_csv('adult.data', sep=",", header=None, names=adultHeaders, na_values=[" ?"])
-#dfRedWine = pd.read_csv('winequality-red.csv')
 
+#drop columns with missing data
 new_dfAdult= dfAdult.dropna(axis = 'columns', how ='any') 
+
+
+#drop column with more than 80% 0s in the features
+#print (dfAdult.isin([' ','0',0]).mean())
+new_dfAdult = new_dfAdult.loc[:, new_dfAdult.isin([' ','0',0]).mean() < .8]
 
 #dfAdult['income'].value_counts().plot(kind='bar')
 #plt.show()
@@ -29,7 +35,7 @@ new_dfAdult= dfAdult.dropna(axis = 'columns', how ='any')
 #plt.savefig('pairwise.png')
 
 #select categorical features
-cat_dfAdult = new_dfAdult.select_dtypes(include=[object])
+cat_dfAdult = new_dfAdult.select_dtypes(include=[object]).copy()
 #print(cat_dfAdult.head(30))
 #print(cat_dfAdult.columns)
 
@@ -43,8 +49,10 @@ cat2_dfAdult = cat_dfAdult.apply(le.fit_transform)
 
 enc = preprocessing.OneHotEncoder()
 enc.fit(cat2_dfAdult)
+
 onehotlabels = enc.transform(cat2_dfAdult).toarray()
 nocat_dfAdult = new_dfAdult.select_dtypes(exclude=[object])
+
 nocatlabels = nocat_dfAdult.to_numpy()
 
 
@@ -62,9 +70,3 @@ alladultdata = alladultdata[:,:-1]
 #print(alladultdata[:,[42]])
 X_adult = alladultdata[:, :-1]
 y_adult= alladultdata[:, -1]
-
-
-#print(alldata.shape)
-
-
-
