@@ -69,7 +69,7 @@ def k_cross_validation(trainningData, label, model):
 
 def split_data(X, y):
 	return np.array_split(X, 5), np.array_split(y, 5)
-i
+
 print("haberman")
 test = k_cross_validation(X_haberman, y_haberman, "nb")
 testlog = k_cross_validation(X_haberman, y_haberman, "log")
