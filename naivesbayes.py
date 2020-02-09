@@ -33,8 +33,9 @@ class NaiveBayes:
         col_prediction = []
         #loop through the class 
         for i in self.summaries:
+            class_attributes = zip(i,x)
             # for each class, calculate the prob with the gaussian function, sum the prob of the attribute
-            col_prediction.append(np.sum(self._gaussian_prob(val, rowsummary[0], rowsummary[1]) for rowsummary, val in zip(i, x)))
+            col_prediction.append(np.sum(self._gaussian_prob(val, rowsummary[0], rowsummary[1]) for rowsummary, val in class_attributes))
         return col_prediction
 
 
