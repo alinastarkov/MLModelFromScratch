@@ -1,20 +1,13 @@
 import numpy as np
-from naivesbayes import NaiveBayes
 from sklearn.utils import shuffle
 from logregression import LogRegression 
+from naivesbayes import NaiveBayes
 import random
-
-#for testing purpose
-from sklearn.model_selection import train_test_split
-from sklearn import datasets
-import matplotlib.pyplot as plt
-from sklearn.naive_bayes import GaussianNB
-
 
 #import clean data 
 from ionosphere_cleaning import X_ionosphere, y_ionosphere
 from HabCleaning import X_haberman, y_haberman
-from cleanAdult import X_adult, y_adult
+from cleanAdult import X_adult, y_adult, nocatlabels, onehotlabels
 from abaloneCleaning import X_abalone, y_abalone
 
 #evaluate the model accuracy
@@ -76,9 +69,16 @@ testlog = k_cross_validation(X_haberman, y_haberman, "log")
 print(test)
 print(testlog)
 
-# print("Adult")
-# test = k_cross_validation(X_adult, y_adult, "nb")
-# testlog = k_cross_validation(X_adult, y_adult, "log")
+print("Adult")
+np.set_printoptions(threshold=np.inf)
+print("Gaussian naive bayes")
+test = k_cross_validation(nocatlabels, y_adult, "nb")
+testlog = k_cross_validation(nocatlabels, y_adult, "log")
+print(test)
+print(testlog)
+print("Mixed naive bayes")
+
+print("Bernoulli naives bayes")
 
 print("Ionosphere")
 test = k_cross_validation(X_ionosphere, y_ionosphere, "nb")
