@@ -51,15 +51,15 @@ io_Yg = io_all_g[:,-1]
 #  We First apply this feature to the "good" data, then the "bad" data
 
 counter = 0
-for i in range(len(io_all.T)):
+for i in range(len(io_X.T)):
     i = i-counter
-    if (np.sum(io_all.T[i] == stats.mode(io_all.T[i]))> 0.6*(len(io_all)) ):
-        io_all = np.delete(io_all,i,axis=1)
+    if (np.sum(io_X.T[i] == stats.mode(io_X.T[i]))> 0.6*(len(io_X)) ):
+        io_X = np.delete(io_X,i,axis=1)
         counter +=1
 
-X_ionosphere = io_all[:, :-1]
-y_ionosphere= io_all[:, -1]
-  
+X_ionosphere = io_X.astype(np.float)
+y_ionosphere= io_Y.astype(np.float)
+
 #counter2 = 0
 #for j in range(len(io_Xb.T)):
     #j = j-counter2
