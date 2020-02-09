@@ -27,8 +27,6 @@ for i in range(len(io_Y)):
 # convert the data to an array of floats
 io_all = np.array(io_all, dtype=float) 
 
-X_ionosphere = io_all[:, :-1]
-y_ionosphere= io_all[:, -1]
 
 # Here, we divide the data into the "good" and "bad" subsets. We accomplish
 # this by sorting the data by the ouput column, then splitting the array
@@ -53,18 +51,21 @@ io_Yg = io_all_g[:,-1]
 #  We First apply this feature to the "good" data, then the "bad" data
 
 counter = 0
-for i in range(len(io_Xg.T)):
+for i in range(len(io_all.T)):
     i = i-counter
-    if (np.sum(io_Xg.T[i] == stats.mode(io_Xg.T[i]))> 0.6*(len(io_Xg)) ):
-        io_Xg = np.delete(io_Xg,i,axis=1)
+    if (np.sum(io_all.T[i] == stats.mode(io_all.T[i]))> 0.6*(len(io_all)) ):
+        io_all = np.delete(io_all,i,axis=1)
         counter +=1
-        
-counter2 = 0
-for j in range(len(io_Xb.T)):
-    j = j-counter2
-    if (np.sum(io_Xb.T[j] == stats.mode(io_Xb.T[j]))> 0.6*(len(io_Xb)) ):
-        io_Xb = np.delete(io_Xb,j,axis=1)
-        counter2 +=1
+
+X_ionosphere = io_all[:, :-1]
+y_ionosphere= io_all[:, -1]
+  
+#counter2 = 0
+#for j in range(len(io_Xb.T)):
+    #j = j-counter2
+    #if (np.sum(io_Xb.T[j] == stats.mode(io_Xb.T[j]))> 0.6*(len(io_Xb)) ):
+        #io_Xb = np.delete(io_Xb,j,axis=1)
+        #counter2 +=1
 
 
 # Now, all instances with "good" results are found in io_Xg, and their 
