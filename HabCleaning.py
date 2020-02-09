@@ -21,19 +21,19 @@ cat2_dfHab = cat_dfHab.apply(le.fit_transform)
 enc = preprocessing.OneHotEncoder()
 enc.fit(cat2_dfHab)
 onehotlabels = enc.transform(cat2_dfHab).toarray()
-#print(onehotlabels.shape)
+
+#dropping the last column so if survived more than 5 years->1 and survived less than 5 years is 0
+onehotlabels = onehotlabels[:,:-1]
+print(onehotlabels)
+
 nocat_dfHab =  dfHab[['age', 'nodes']]
 nocatlabels = nocat_dfHab.to_numpy()
 
+X_haberman_cat = onehotlabels[:, :-1]
+X_haberman_cont = nocatlabels
+y_haberman= onehotlabels[:, -1]
 
 
-allhabdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
-allhabdata = allhabdata[:,:-1]
-
-X_haberman = allhabdata[:, :-1]
-y_haberman= allhabdata[:, -1]
-
-#dropping the last column so if survived more than 5 years->1 and survived less than 5 years is 0
 #print(allhabdata)
 
  
