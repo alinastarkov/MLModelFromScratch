@@ -29,6 +29,9 @@ print(onehotlabels)
 nocat_dfHab =  dfHab[['age', 'nodes']]
 nocatlabels = nocat_dfHab.to_numpy()
 
+allhabdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
+
+X_haberman = allhabdata[:, :-1]
 X_haberman_cat = onehotlabels[:, :-1]
 X_haberman_cont = nocatlabels
 y_haberman= onehotlabels[:, -1]

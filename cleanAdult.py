@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn import preprocessing
-import category_encoders as ce
 
 
 adultHeaders=['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'capital-gain', 'capital-loss', 'hours-per-week', 'native-country', 'income'] 
@@ -54,17 +53,20 @@ onehotlabels = enc.transform(cat2_dfAdult).toarray()
 
 #dropping the last column so <50k is 1 and >50k is 0
 onehotlabels = onehotlabels[:,:-1]
+print(onehotlabels)
 nocat_dfAdult = new_dfAdult.select_dtypes(exclude=[object])
 
 nocatlabels = nocat_dfAdult.to_numpy()
+alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
 
+X_adult = alladultdata[:, :-1]
 X_adult_cat = onehotlabels[:, :-1]
 X_adult_cont = nocatlabels
 y_adult= onehotlabels[:, -1]
 
 #print(X_adult_cont)
 #print(X_adult_cat)
-#print(y_adult)
+print(y_adult)
 
 
 #alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
