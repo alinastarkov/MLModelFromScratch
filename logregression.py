@@ -7,9 +7,9 @@ Created on Wed Jan 29 15:01:07 2020
 import numpy as np
 
 class LogRegression:
-    def __init__(self, learningRate, iteration):
+    def __init__(self, learningRate, epsilon):
         self.lr = learningRate
-        self.itr = iteration
+        self.eps = epsilon
 
     def _logistic(self, z):
         yh = 1/(1+np.exp(-z))
@@ -24,7 +24,7 @@ class LogRegression:
         N,D = X.shape
         w = np.zeros(D)
         g = np.inf
-        while np.linalg.norm(g) > self.itr:
+        while np.linalg.norm(g) > self.eps:
             g = self._gradient(X, y, w)
             w = w - self.lr*(g)
             return w
