@@ -16,8 +16,9 @@ class LogRegression:
         return yh
 
     def _gradient(self, X, y, w):
+        N,D = X.shape
         yh = self._logistic(np.dot(X, w))
-        gradJ = np.dot(X.T, yh - y)
+        gradJ = np.dot(X.T, yh - y)/N
         return gradJ
 
     def fit (self, X, y):
