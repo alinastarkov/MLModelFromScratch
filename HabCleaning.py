@@ -24,7 +24,6 @@ onehotlabels = enc.transform(cat2_dfHab).toarray()
 
 #dropping the last column so if survived more than 5 years->1 and survived less than 5 years is 0
 onehotlabels = onehotlabels[:,:-1]
-print(onehotlabels)
 
 nocat_dfHab =  dfHab[['age', 'nodes']]
 nocatlabels = nocat_dfHab.to_numpy()
