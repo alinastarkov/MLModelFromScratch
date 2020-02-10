@@ -53,7 +53,7 @@ onehotlabels = enc.transform(cat2_dfAdult).toarray()
 
 #dropping the last column so <50k is 1 and >50k is 0
 onehotlabels = onehotlabels[:,:-1]
-print(onehotlabels)
+#print(onehotlabels)
 nocat_dfAdult = new_dfAdult.select_dtypes(exclude=[object])
 
 nocatlabels = nocat_dfAdult.to_numpy()
@@ -66,7 +66,6 @@ y_adult= onehotlabels[:, -1]
 
 #print(X_adult_cont)
 #print(X_adult_cat)
-print(y_adult)
 
 
 #alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
