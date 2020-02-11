@@ -28,7 +28,7 @@ class LogRegression:
         while np.linalg.norm(g) > self.eps:
             g = self._gradient(X, y, w)
             w = w - self.lr*(g)
-            return w, n_iter;
+            return w
 
     def predict(self,X,w):
         yh = self._logistic(np.dot(X, w))
