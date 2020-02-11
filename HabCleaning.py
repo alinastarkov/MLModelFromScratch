@@ -31,6 +31,7 @@ nocatlabels = nocat_dfHab.to_numpy()
 allhabdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
 
 X_haberman = allhabdata[:, :-1]
+X_haberman = X_haberman / X_haberman.max(axis=0)
 X_haberman_cat = onehotlabels[:, :-1]
 X_haberman_cont = nocatlabels
 y_haberman= onehotlabels[:, -1]
