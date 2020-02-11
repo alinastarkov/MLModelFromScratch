@@ -62,17 +62,14 @@ class NaiveBayes:
             col_prediction.append(np.sum(self._gaussian_prob(val, rowsummary[0], rowsummary[1]) for rowsummary, val in class_attributes))
         return col_prediction
 
-    def _bernoulli_prob(self, X):
-        pass
-
     def predict(self,X, Xcat=[]):
         #prediction for gaussian
         prediction = []
         predictionBernoulli = []
         for x in X:
             #get individual probability for each attribute for each class in each row, 
-            prob_prediction = self._get_prob(x)
-            prediction.append(prob_prediction)
+            poster_prediction = self._get_prob(x)
+            prediction.append(poster_prediction)
 
         #prediction for bernoulli
         if (self.bernNB ==1 and len(Xcat) > 0):
