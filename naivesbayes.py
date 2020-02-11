@@ -38,11 +38,14 @@ class NaiveBayes:
             Xcat_features_count = []
             Xcat_instance_count = []
             for c in self.uniqueClasses: 
-            #select all the rows with the label, assuming that the label is always at the end 
+                #calculate the priors prob, prior = num of instances in class / total num of instances 
                 selectedRows = Xcat[y == c]
                 self.priors.append(len(selectedRows)/num_instances)
+                # + 0.5 to prevent 0 probability 
                 arr = np.sum(np.array(selectedRows), axis=0) + 0.5
+                # sum up total number of 1s across all features in that class 
                 Xcat_features_count.append(arr)
+                # total number of instances in that class 
                 arr2= np.array(len(selectedRows) + 1.5)
                 Xcat_instance_count.append(arr2)
 
