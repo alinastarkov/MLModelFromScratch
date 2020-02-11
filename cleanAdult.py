@@ -60,6 +60,7 @@ nocatlabels = nocat_dfAdult.to_numpy()
 alladultdata= np.concatenate((nocatlabels, onehotlabels), axis=1)
 
 X_adult = alladultdata[:, :-1]
+X_adult = X_adult / X_adult.max(axis=0) # This normalizes each column
 X_adult_cat = onehotlabels[:, :-1]
 X_adult_cont = nocatlabels
 y_adult= onehotlabels[:, -1]
