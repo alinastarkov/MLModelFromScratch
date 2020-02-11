@@ -21,6 +21,7 @@ def evaluate_acc(trueLabels, predictLabels):
 def k_cross_validation(trainningData, label, model, bernoulli, Xcat=[]):
 	#need to split trainning data into X and y somehow
 	accuracies = []
+	n_iter = []
 	k_folds= split_data(trainningData, label, Xcat)
 	for i in range(5):
 		if(model=="nb"):
@@ -61,12 +62,12 @@ def k_cross_validation(trainningData, label, model, bernoulli, Xcat=[]):
 			Ytrain = np.concatenate(Ytrain)
 
 			logModel=LogRegression(0.001, 10000) 
-			w = logModel.fit(Xtrain, Ytrain)
+			w, n_iter = logModel.fit(Xtrain, Ytrain)
 			predictions = logModel.predict(testSet, w)
 			accuracies.append(evaluate_acc(test_y, predictions))
 
 	avg_accuracy = sum(accuracies)/5
-	return avg_accuracy
+	return avg_accuracy, n_iter
 
 
 def split_data(X, y, Xcat):
