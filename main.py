@@ -79,7 +79,7 @@ def validation_nb_categorical(Xtrain, Xcattrain, X_test, Xcat_test, y_train, y_t
 	for _ in range(5):
 		nbModel= NaiveBayes(1) # if be.fit(1)
 		nbModel.fit(Xtrain, y_train, Xcattrain)
-		predictions = nbModel.predict(X_test,X_testcat)
+		predictions = nbModel.predict(X_test,Xcat_test)
 		pred = evaluate_acc(y_test, predictions)
 		accuracies.append(pred)
 	return (sum(accuracies)/5)
@@ -103,7 +103,7 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 		accuracies.append(evaluate_acc(y_test, predictions))
 	return (sum(accuracies)/5)
 
-#--------EXPERIMENT 2----------
+# --------EXPERIMENT 2----------
 # print("haberman")
 # X_train, X_test, y_train, y_test = train_test_split(X_haberman_cont, y_haberman, test_size=0.10, random_state=42)
 # X_traincat, X_testcat, y_traincat, y_testcat = train_test_split(X_haberman_cat, y_haberman, test_size=0.10, random_state=42)
@@ -127,9 +127,9 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 # testlog = k_cross_validation(Xh_train, yh_train, "log", 0)
 # print(testlog)
 
-#------EXPERIMENT 3---------
-#~~~~~~NAIVES BAYES~~~~~~
-#split x and y into 90-10 training and testing set 
+# ------EXPERIMENT 3---------
+# ~~~~~~NAIVES BAYES~~~~~~
+# split x and y into 90-10 training and testing set 
 # X_train, X_test, y_train, y_test = train_test_split(X_haberman_cont, y_haberman, test_size=0.10, random_state=42)
 # X_traincat, X_testcat, y_traincat, y_testcat = train_test_split(X_haberman_cat, y_haberman, test_size=0.10, random_state=42)
 
@@ -151,7 +151,7 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 # test_size = [0.15, 0.30, 0.45] 
 
 # for size in test_size:
-# 	#control training size for the experiment 
+# 	control training size for the experiment 
 # 	X_train1, X_test1, y_train1, y_test1 = train_test_split(X_train, y_train, test_size=size, random_state=5)
 # 	X_traincat1, X_testcat1, y_traincat1, y_testcat1 = train_test_split(X_traincat, y_traincat, test_size=size, random_state=5)
 # 	accuracies = []
@@ -169,14 +169,14 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 # 	test = k_cross_validation(X_train1, y_train1, "nb", 0,X_traincat1 )
 # 	print(test)
 
-#~~~~~LOGISTIC REGRESSION ~~~~~~
+# ~~~~~LOGISTIC REGRESSION ~~~~~~
 
 # from ionosphere_cleaning import X_ionosphere, y_ionosphere
 # from HabCleaning import X_haberman_cat, X_haberman_cont, y_haberman, X_haberman
 # from cleanAdult import X_adult_cat, X_adult_cont, y_adult, X_adult
 # from cleanIris import X_iris, y_iris
 
-#X_train, X_test, y_train, test_y = train_test_split(X_haberman, y_haberman, test_size=0.10)
+# X_train, X_test, y_train, test_y = train_test_split(X_haberman, y_haberman, test_size=0.10)
 # accuracies =[]
 # for _ in range(5):
 # 	logModel=LogRegression(0.001, 0.01) 
@@ -194,7 +194,7 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 # test_size = [0.15, 0.30, 0.45] 
 
 # for size in test_size:
-# 	#control training size for the experiment 
+# 	control training size for the experiment 
 # 	X_train1, X_test1, y_train1, y_test1 = train_test_split(X_train, y_train, test_size=size)
 # 	accuracies = []
 
@@ -211,7 +211,7 @@ def validation_logistic(Xtrain, Xtest, y_train, y_test):
 # 	test = k_cross_validation(X_train1, y_train1, "log", 0 )
 # 	print(test)
 
-#------------- EXPERIMENT 1 -------------
+# ------------- EXPERIMENT 1 -------------
 # print("Ionosphere")
 # Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_ionosphere, y_ionosphere, test_size=0.10, random_state=42)
 
