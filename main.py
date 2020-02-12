@@ -68,7 +68,7 @@ def k_cross_validation(trainningData, label, model, bernoulli, Xcat=[]):
 			accuracies.append(evaluate_acc(test_y, predictions))
 
 	avg_accuracy = sum(accuracies)/5
-	return avg_accuracy, n_iter
+	return avg_accuracy
 
 
 def split_data(X, y, Xcat):
@@ -111,10 +111,10 @@ X_traincat, X_testcat, y_traincat, y_testcat = train_test_split(X_haberman_cat, 
 Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_haberman, y_haberman, test_size=0.10, random_state=42)
 
 print("naive bayes training ")
-test = k_cross_validation(X_train, yh_train, "nb", 1, X_traincat)[0]
+test = k_cross_validation(X_train, yh_train, "nb", 1, X_traincat)
 print(test)
 print("Logistic regression training")
-testlog = k_cross_validation(Xh_train, yh_train, "log", 0)[0]
+testlog = k_cross_validation(Xh_train, yh_train, "log", 0)
 print(testlog)
 
 print("Adult")
@@ -122,30 +122,30 @@ X_train, X_test, y_train, y_test = train_test_split(X_adult_cont, y_adult, test_
 X_traincat, X_testcat, y_traincat, y_testcat = train_test_split(X_adult_cat, y_adult, test_size=0.10, random_state=42)
 Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_adult, y_adult, test_size=0.10, random_state=42)
 print("naive bayes training ")
-test = k_cross_validation(X_train, yh_train, "nb", 1, X_traincat)[0]
+test = k_cross_validation(X_train, yh_train, "nb", 1, X_traincat)
 print(test)
 print("Logistic regression training")
-testlog = k_cross_validation(Xh_train, yh_train, "log", 0)[0]
+testlog = k_cross_validation(Xh_train, yh_train, "log", 0)
 print(testlog)
 
 print("Iris")
 X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris, test_size=0.10, random_state=42)
 Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 print("naive bayes training ")
-test = k_cross_validation(X_train, y_train, "nb", 0)[0]
+test = k_cross_validation(X_train, y_train, "nb", 0)
 print(test)
 print("Logistic regression training")
-testlog = k_cross_validation(X_train, y_train, "log", 0)[0]
+testlog = k_cross_validation(X_train, y_train, "log", 0)
 print(testlog)
 
 print("Ionosphere")
 X_train, X_test, y_train, y_test = train_test_split(X_ionosphere, y_ionosphere, test_size=0.10, random_state=42)
 Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 print("naive bayes training ")
-test = k_cross_validation(X_train, y_train, "nb", 0)[0]
+test = k_cross_validation(X_train, y_train, "nb", 0)
 print(test)
 print("Logistic regression training")
-testlog = k_cross_validation(X_train, y_train, "log", 0)[0]
+testlog = k_cross_validation(X_train, y_train, "log", 0)
 print(testlog)
 
 
@@ -171,7 +171,7 @@ print("test size = 100%")
 print("Validation accuracy")
 print(sum(accuracies)/5)
 print("training accuracy")
-test = k_cross_validation(X_train, y_train, "nb", 0, X_traincat)[0]
+test = k_cross_validation(X_train, y_train, "nb", 0, X_traincat)
 print(test)
 
 test_size = [0.15, 0.30, 0.45] 
@@ -191,7 +191,7 @@ for size in test_size:
 	print("Validation accuracy")
 	print(sum(accuracies)/5)
 	print("Training accuracy")
-	test = k_cross_validation(X_train1, y_train1, "nb", 0,X_traincat1 )[0]
+	test = k_cross_validation(X_train1, y_train1, "nb", 0,X_traincat1 )
 	print(test)
 
 
@@ -211,7 +211,7 @@ print("test size = 100%")
 print("Validation accuracy")
 print(sum(accuracies)/5)
 print("training accuracy")
-test = k_cross_validation(X_train, y_train, "log", 0)[0]
+test = k_cross_validation(X_train, y_train, "log", 0)
 print(test)
 
 test_size = [0.15, 0.30, 0.45] 
@@ -230,7 +230,7 @@ for size in test_size:
 	print("Validation accuracy")
 	print(sum(accuracies)/5)
 	print("Training accuracy")
-	test = k_cross_validation(X_train1, y_train1, "log", 0 )[0]
+	test = k_cross_validation(X_train1, y_train1, "log", 0 )
 	print(test)
 
 # ------------- EXPERIMENT 1 -------------
@@ -248,8 +248,8 @@ print(testlog)
 print("Iris")
 Xh_train, Xh_test, yh_train, yh_test = train_test_split(X_iris, y_iris, test_size=0.10, random_state=42)
 print("naive bayes")
-test, n_iter = k_cross_validation(X_iris, y_iris, "nb", 0)
+test = k_cross_validation(X_iris, y_iris, "nb", 0)
 print(test)
 print("Logistic regression")
-testlog, n_iter = k_cross_validation(X_iris, y_iris, "log", 0)
+testlog = k_cross_validation(X_iris, y_iris, "log", 0)
 print(testlog)
