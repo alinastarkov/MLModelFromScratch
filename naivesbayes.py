@@ -74,19 +74,22 @@ class NaiveBayes:
         #prediction for bernoulli
         if (self.bernNB ==1 and len(Xcat) > 0):
             predictionBernoulli = []
+            #calculate the prob according to the bernoulli formula => make prediction for each x in X 
             for x in Xcat:
                 logp = np.log(self.priors) + (np.log(self.likelihood) * x + np.log(1 - self.likelihood) * np.abs(x - 1)).sum(axis=1) 
+                #normalize the data
                 logp -= np.max(logp)
                 posterior = np.exp(logp)
                 posterior /= np.sum(posterior)
                 predictionBernoulli.append(posterior)
             hybrid = []
             for bernoulli, gaussian in zip(predictionBernoulli, prediction):
+                # since we take the log of the prob => we can sum to prevent 0.0 probability 
                 prob = bernoulli + gaussian
                 hybrid.append(prob)
             hybrid = np.array(hybrid)
             return np.argmax(hybrid, axis=1)
-
+        # take the higher prediction
         return np.argmax(prediction, axis=1)
        
             
